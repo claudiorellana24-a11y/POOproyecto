@@ -33,4 +33,26 @@ public class InventarioLetras {
             }
         }
     }
+
+    // retorna el total de letras
+    public int size() {
+        return totalCount;
+    }
+
+    // retorna true si no hay ninguna letra
+    public boolean isEmpty() {
+        return nonZeroCount == 0;
+    }
+
+    // retorna cuántas veces aparece una letra
+    public int get(char letra) {
+        letra = Character.toLowerCase(letra);
+
+        // si no es letra lanza error
+        if (letra < 'a' || letra > 'z') {
+            throw new IllegalArgumentException("El carácter no es una letra válida.");
+        }
+
+        return inventario[letra - 'a'];
+    }
 }
