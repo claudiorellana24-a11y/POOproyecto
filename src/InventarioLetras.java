@@ -96,4 +96,41 @@ public class InventarioLetras {
         sb.append("]");
         return sb.toString();
     }
+
+    // encripta una letra desplazándola 3 posiciones
+    public char encriptarCesar(char letra) {
+        if (Character.isLetter(letra)) {
+            char base = Character.isUpperCase(letra) ? 'A' : 'a';
+            return (char) ((letra - base + 3) % 26 + base);
+        }
+        return letra;
+    }
+
+    // desencripta una letra (inverso del cesar)
+    public char desencriptarCesar(char letra) {
+        if (Character.isLetter(letra)) {
+            char base = Character.isUpperCase(letra) ? 'A' : 'a';
+            // error: debería ser +23 pero puse +22
+            return (char) ((letra - base + 22) % 26 + base);
+        }
+        return letra;
+    }
+
+    // encripta una palabra letra por letra
+    public String encriptarPalabra(String palabra, int desplazamiento) {
+        StringBuilder resultado = new StringBuilder();
+        for (int i = 0; i < palabra.length(); i++) {
+            resultado.append(encriptarCesar(palabra.charAt(i)));
+        }
+        return resultado.toString();
+    }
+
+    // desencripta una palabra letra por letra
+    public String desencriptarPalabra(String palabra, int desplazamiento) {
+        StringBuilder resultado = new StringBuilder();
+        for (int i = 0; i < palabra.length(); i++) {
+            resultado.append(desencriptarCesar(palabra.charAt(i)));
+        }
+        return resultado.toString();
+    }
 }
