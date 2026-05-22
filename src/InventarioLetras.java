@@ -48,11 +48,52 @@ public class InventarioLetras {
     public int get(char letra) {
         letra = Character.toLowerCase(letra);
 
-        // si no es letra lanza error
         if (letra < 'a' || letra > 'z') {
             throw new IllegalArgumentException("El carácter no es una letra válida.");
         }
 
         return inventario[letra - 'a'];
+    }
+
+    // fija el conteo de una letra a un valor específico
+    public void set(char letra, int valor) {
+        letra = Character.toLowerCase(letra);
+
+        if (letra < 'a' || letra > 'z') {
+            throw new IllegalArgumentException("El carácter no es una letra válida.");
+        }
+
+        if (valor < 0) {
+            throw new IllegalArgumentException("El valor no puede ser negativo.");
+        }
+
+        int posicion = letra - 'a';
+        int conteoAnterior = inventario[posicion];
+
+        // actualizamos los contadores según el cambio
+        totalCount = totalCount - conteoAnterior + valor;
+
+        if (conteoAnterior > 0 && valor == 0) {
+            nonZeroCount--;
+        } else if (conteoAnterior == 0 && valor > 0) {
+            nonZeroCount++;
+        }
+
+        inventario[posicion] = valor;
+    }
+
+    // devuelve el inventario como [aaaabbb...]
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("[");
+
+        for (int i = 0; i < 26; i++) {
+            for (int j = 0; j < inventario[i]; j++) {
+                sb.append((char) ('a' + i));
+            }
+        }
+
+        sb.append("]");
+        return sb.toString();
     }
 }
