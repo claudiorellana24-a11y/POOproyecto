@@ -106,12 +106,11 @@ public class InventarioLetras {
         return letra;
     }
 
-    // desencripta una letra (inverso del cesar)
+    // desencripta una letra (inverso del cesar), se corrigió el desplazamiento
     public char desencriptarCesar(char letra) {
         if (Character.isLetter(letra)) {
             char base = Character.isUpperCase(letra) ? 'A' : 'a';
-            // error: debería ser +23 pero puse +22
-            return (char) ((letra - base + 22) % 26 + base);
+            return (char) ((letra - base + 23) % 26 + base);
         }
         return letra;
     }
@@ -132,5 +131,56 @@ public class InventarioLetras {
             resultado.append(desencriptarCesar(palabra.charAt(i)));
         }
         return resultado.toString();
+    }
+
+    // suma dos inventarios y retorna uno nuevo
+    public InventarioLetras add(InventarioLetras otro) {
+        InventarioLetras nuevo = new InventarioLetras("");
+
+        for (int i = 0; i < 26; i++) {
+            nuevo.inventario[i] = this.inventario[i] + otro.inventario[i];
+            nuevo.totalCount += nuevo.inventario[i];
+            if (nuevo.inventario[i] > 0) {
+                nuevo.nonZeroCount++;
+            }
+        }
+
+        return nuevo;
+    }
+
+    // multiplica todos los conteos por n
+    public InventarioLetras amplifies(int n) {
+        InventarioLetras nuevo = new InventarioLetras("");
+
+        for (int i = 0; i < 26; i++) {
+            nuevo.inventario[i] = this.inventario[i] * n;
+            nuevo.totalCount += nuevo.inventario[i];
+            if (nuevo.inventario[i] > 0) {
+                nuevo.nonZeroCount++;
+            }
+        }
+
+        return nuevo;
+    }
+
+    // resta otro inventario, retorna null si algún resultado es negativo
+    public InventarioLetras subtract(InventarioLetras otro) {
+        InventarioLetras nuevo = new InventarioLetras("");
+
+        for (int i = 0; i < 26; i++) {
+            int diferencia = this.inventario[i] - otro.inventario[i];
+
+            if (diferencia < 0) {
+                return null;
+            }
+
+            nuevo.inventario[i] = diferencia;
+            nuevo.totalCount += diferencia;
+            if (diferencia > 0) {
+                nuevo.nonZeroCount++;
+            }
+        }
+
+        return nuevo;
     }
 }
