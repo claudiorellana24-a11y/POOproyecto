@@ -1,3 +1,5 @@
+// clase para probar que todo funcione bien
+// va probando cada método uno por uno
 public class PruebaInventario {
 
     public static void main(String[] args) {
